@@ -5,7 +5,8 @@ from functools import wraps
 from flask import abort
 from datetime import datetime
 from enum import Enum
-import mysql.connector
+import psycopg2
+import psycopg2.extras
 import os
 from werkzeug.utils import secure_filename
 from config import Config
@@ -51,18 +52,26 @@ class NotificationType(Enum):
     PROPERTY = 'property'
     SYSTEM = 'system'
     
-# Database connection setup
+# Database connection setup for PostgreSQL
 def connect_db():
-    conn = mysql.connector.connect(
-        host=os.getenv('MYSQL_HOST', 'localhost'),
-        user=os.getenv('MYSQL_USER', 'root'),
-        password=os.getenv('MYSQL_PASSWORD', 'WW15257Z'),
-        database=os.getenv('MYSQL_DB', 'property_db'),
-        connect_timeout=10,  # Add timeout settings
-        pool_size=5,        # Add connection pooling
-        pool_name="mypool"
-    )
-    return conn
+    try:
+        # 檢查是否使用 PostgreSQL
+        if os.getenv('DATABASE_URL'):
+            # 使用 DATABASE_URL 環境變量
+            conn = psycopg2.connect(os.getenv('DATABASE_URL'))
+        else:
+            # 使用單獨的環境變量
+            conn = psycopg2.connect(
+                host=os.getenv('POSTGRES_HOST', 'dpg-d2aqb7fdiees73e29qt0-a.singapore-postgres.render.com'),
+                user=os.getenv('POSTGRES_USER', 'property_db_mk0k_user'),
+                password=os.getenv('POSTGRES_PASSWORD', 'GFL0ceMFr7z9zG2yI7XURfT59SlOP8so'),
+                database=os.getenv('POSTGRES_DB', 'property_db_mk0k'),
+                port=os.getenv('POSTGRES_PORT', '5432')
+            )
+        return conn
+    except Exception as e:
+        print(f"數據庫連接錯誤: {e}")
+        raise
 
 
 
@@ -165,9 +174,9 @@ def register():
         conn.commit()
         return jsonify({"message": "User registered successfully"}), 201
 
-    except mysql.connector.Error as err:
+    except Exception as e:
         conn.rollback()
-        return jsonify({"error": str(err)}), 400
+        return jsonify({"error": str(e)}), 400
     finally:
         cursor.close()
         conn.close()
@@ -1376,9 +1385,9 @@ def create_user():
             "user_id": user_id
         }), 201
         
-    except mysql.connector.Error as err:
+    except Exception as e:
         conn.rollback()
-        return jsonify({"error": str(err)}), 400
+        return jsonify({"error": str(e)}), 400
     finally:
         cursor.close()
         conn.close()
@@ -1679,9 +1688,9 @@ def add_favorite():
         conn.commit()
         return jsonify({"message": "Property added to favorites"}), 201
 
-    except mysql.connector.Error as err:
+    except Exception as e:
         conn.rollback()
-        return jsonify({"error": str(err)}), 500
+        return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
         conn.close()
@@ -1711,9 +1720,9 @@ def remove_favorite(property_id):
         conn.commit()
         return jsonify({"message": "Property removed from favorites"}), 200
 
-    except mysql.connector.Error as err:
+    except Exception as e:
         conn.rollback()
-        return jsonify({"error": str(err)}), 500
+        return jsonify({"error": str(e)}), 500
     finally:
         cursor.close()
         conn.close()

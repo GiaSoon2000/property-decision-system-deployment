@@ -7,14 +7,8 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.16
-      - key: MYSQL_HOST
-        value: your-mysql-host
-      - key: MYSQL_USER
-        value: your-mysql-user
-      - key: MYSQL_PASSWORD
-        value: your-mysql-password
-      - key: MYSQL_DB
-        value: your-mysql-database
+      - key: DATABASE_URL
+        value: postgresql://property_db_mk0k_user:GFL0ceMFr7z9zG2yI7XURfT59SlOP8so@dpg-d2aqb7fdiees73e29qt0-a.singapore-postgres.render.com/property_db_mk0k
       - key: OPENAI_API_KEY
         sync: false
       - key: FLASK_SECRET_KEY
