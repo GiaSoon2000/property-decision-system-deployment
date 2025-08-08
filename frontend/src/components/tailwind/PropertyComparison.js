@@ -1,4 +1,4 @@
-import API_ENDPOINTS from '../config';
+import API_ENDPOINTS from '../../config';
 import React from 'react';
 import { X } from 'lucide-react';
 

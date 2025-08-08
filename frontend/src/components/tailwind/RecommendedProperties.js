@@ -1,4 +1,4 @@
-import API_ENDPOINTS from '../config';
+import API_ENDPOINTS from '../../config';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFavorites } from '../FavoritesContext';

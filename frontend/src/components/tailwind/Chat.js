@@ -1,4 +1,4 @@
-import API_ENDPOINTS from '../config';
+import API_ENDPOINTS from '../../config';
 // frontend/src/pages/Chat.js
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';

@@ -1,4 +1,4 @@
-import API_ENDPOINTS from '../config';
+import API_ENDPOINTS from '../../config';
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
