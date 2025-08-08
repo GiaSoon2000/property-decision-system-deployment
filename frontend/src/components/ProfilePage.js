@@ -21,9 +21,9 @@ const ProfilePage = () => {
                     return;
                 }
 
-                console.log('Making fetch request to:', `http://localhost:5000/user-profile/${userId}`);
+                console.log('Making fetch request to:', `${API_ENDPOINTS.USER_PROFILE}/\${1}`);
 
-                const response = await fetch(`http://localhost:5000/user-profile/${userId}`, {
+                const response = await fetch(`${API_ENDPOINTS.USER_PROFILE}/\${1}`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
@@ -65,7 +65,7 @@ const ProfilePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:5000/update-profile/${userData.id}`, {
+            const response = await fetch(`${API_ENDPOINTS.UPDATE_PROFILE}/\${1}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

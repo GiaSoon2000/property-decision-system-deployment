@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 // frontend/src/pages/Chat.js
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -60,7 +61,7 @@ const ChatPage = () => {
         current_page: window.location.pathname,
       };
 
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch(API_ENDPOINTS.CHAT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

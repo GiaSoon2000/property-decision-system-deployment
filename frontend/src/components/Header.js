@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState, useEffect, useCallback  } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Bell, Home, Building, Users, Building2Icon, CopyMinusIcon, Calculator, KeyRound, MessagesSquareIcon, InfoIcon } from 'lucide-react';
@@ -17,7 +18,7 @@ const Header = () => {
   // Define handleLogout first since it's a dependency for other functions
   const handleLogout = useCallback(() => {
     // First clear the server session
-    fetch('http://localhost:5000/logout', {
+    fetch(API_ENDPOINTS.LOGOUT, {
       method: 'POST',
       credentials: 'include'
     })
@@ -55,7 +56,7 @@ const Header = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${userId}`, {
+      const response = await fetch(`${API_ENDPOINTS.NOTIFICATIONS}/\${1}`, {
         credentials: 'include'
       });
       
@@ -93,7 +94,7 @@ const Header = () => {
   // refreshUserSession depends on both fetchNotifications and handleLogout
   const refreshUserSession = useCallback(async () => {
     try {
-      const response = await fetch('http://localhost:5000/user-info', {
+      const response = await fetch(API_ENDPOINTS.USER_INFO, {
         credentials: 'include'
       });
 
@@ -155,7 +156,7 @@ const Header = () => {
     if (!userId || !notificationId) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${notificationId}/read`, {
+      const response = await fetch(`${API_ENDPOINTS.MARK_NOTIFICATION_READ}/\${1}/read`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -176,7 +177,7 @@ const Header = () => {
     if (!userId) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${userId}/mark-all-read`, {
+      const response = await fetch(`${API_ENDPOINTS.MARK_ALL_NOTIFICATIONS_READ}/\${1}/mark-all-read`, {
         method: 'POST',
         credentials: 'include'
       });

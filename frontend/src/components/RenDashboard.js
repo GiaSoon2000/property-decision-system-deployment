@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/RenDashboard.css';
@@ -21,7 +22,7 @@ const RenDashboard = () => {
 
     const fetchUserInfo = async () => {
         try {
-            const response = await fetch('http://localhost:5000/user-info', {
+            const response = await fetch(API_ENDPOINTS.USER_INFO, {
                 credentials: 'include'
             });
             const userData = await response.json();
@@ -43,7 +44,7 @@ const RenDashboard = () => {
     const fetchRenProperties = async (renId) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:5000/ren/properties/${renId}`, {
+            const response = await fetch(`${API_ENDPOINTS.REN_PROPERTIES}/\${1}`, {
                 credentials: 'include'
             });
             

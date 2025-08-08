@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
@@ -41,7 +42,7 @@ const PropertyManagement = () => {
 
     const loadProperties = async () => {
       try {
-        const response = await fetch('http://localhost:5000/admin/approved-properties',{
+        const response = await fetch(API_ENDPOINTS.ADMIN_APPROVED_PROPERTIES,{
             credentials: 'include'
         });
         if (!response.ok) {
@@ -110,7 +111,7 @@ const PropertyManagement = () => {
             
             console.log('Fetching property details for ID:', propertyId);
             
-            const response = await fetch(`http://localhost:5000/admin/property/${propertyId}/edit`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_EDIT}/\${1}/edit`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -152,7 +153,7 @@ const PropertyManagement = () => {
             setShowForm(true);
 
             // Fetch property images
-            const imagesResponse = await fetch(`http://localhost:5000/admin/property/${propertyId}/images`, {
+            const imagesResponse = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_IMAGES}/\${1}/images`, {
                 credentials: 'include',
             });
         
@@ -172,7 +173,7 @@ const PropertyManagement = () => {
     const handleDelete = async (propertyId) => {
       if (window.confirm('Are you sure you want to delete this property?')) {
         try {
-          const response = await fetch(`http://localhost:5000/admin/property/${propertyId}/delete`, {
+          const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_DELETE}/\${1}/delete`, {
             method: 'DELETE',
             credentials: 'include'
           });
@@ -196,7 +197,7 @@ const PropertyManagement = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/admin/property/${editingId}/image/${imageId}/delete`,
+                `${API_ENDPOINTS.ADMIN_PROPERTY_IMAGES}/\${1}/image/\${2}/delete`,
                 {
                     method: 'DELETE',
                     credentials: 'include',
@@ -233,8 +234,8 @@ const PropertyManagement = () => {
         
         // Define the URL based on whether we're editing or creating
         const url = isEditing 
-            ? `http://localhost:5000/admin/property/${editingId}/edit`
-            : 'http://localhost:5000/admin/create-property';
+            ? `${API_ENDPOINTS.ADMIN_PROPERTY_EDIT}/\${1}/edit`
+            : API_ENDPOINTS.ADMIN_CREATE_PROPERTY;
         
         const formDataObj = new FormData();
         
@@ -524,12 +525,12 @@ const PropertyManagement = () => {
                         {formData.existingImages.map((img) => (
                             <div key={img.id} className="tw-relative tw-group">
                                 <img 
-                                    src={`http://localhost:5000/static/images/property_images/${img.image_path}`}
+                                    src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                                     alt="Property" 
                                     className="tw-w-full tw-h-32 tw-object-cover tw-rounded-md"
                                     onError={(e) => {
                                         e.target.onerror = null;
-                                        e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                                        e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                                     }}
                                 />
                                 <button
@@ -587,11 +588,11 @@ const PropertyManagement = () => {
                 {property.images && property.images.length > 0 ? (
                 <img
                     className="tw-w-full tw-h-full tw-object-cover"
-                    src={`http://localhost:5000/static/images/property_images/${property.images[0].image_path}`}
+                    src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                     alt={property.name}
                     onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                        e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                     }}
                 />
                 ) : (

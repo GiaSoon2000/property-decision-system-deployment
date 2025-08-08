@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SubmitNewPropertyForm.css';
@@ -56,7 +57,7 @@ const SubmitNewPropertyForm = () => {
                 formDataToSend.append('images', image);
             });
 
-            const response = await fetch('http://localhost:5000/submit-new-property', {
+            const response = await fetch(API_ENDPOINTS.SUBMIT_PROPERTY, {
                 method: 'POST',
                 credentials: 'include',
                 body: formDataToSend, // Don't set Content-Type header when sending FormData

@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '../ui/card';
@@ -126,7 +127,7 @@ const PropertyDetails = () => {
   useEffect(() => {
     const fetchPropertyDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/properties/${id}`);
+        const response = await fetch(`${API_ENDPOINTS.PROPERTY_DETAIL}/\${1}`);
         const data = await response.json();
         setProperty(data);
       } catch (error) {
@@ -169,13 +170,13 @@ const PropertyDetails = () => {
             <div className="tw-aspect-[4/3] tw-relative tw-overflow-hidden tw-rounded-lg tw-shadow-lg tw-h-[280px]">
               <img
                 src={property.images && property.images.length > 0
-                  ? `http://localhost:5000/static/images/property_images/${property.images[activeImage].image_path}`
-                  : 'http://localhost:5000/static/images/property_images/default-property.jpg'}
+                  ? ``${API_ENDPOINTS.STATIC_IMAGES}/${property.images[activeImage].image_path}`
+                  : '`${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg'}
                 alt={`Property ${property.name}`}
                 className="tw-w-full tw-h-full tw-object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                  e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                 }}
               />
             </div>
@@ -190,7 +191,7 @@ const PropertyDetails = () => {
                   className="tw-aspect-[4/3] tw-relative tw-overflow-hidden tw-rounded-lg tw-shadow-lg tw-h-[85px]"
                 >
                   <img
-                    src={`http://localhost:5000/static/images/property_images/${image.image_path}`}
+                    src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                     alt={`Property ${property.name}`}
                     className="tw-w-full tw-h-full tw-object-cover tw-cursor-pointer"
                     onClick={() => {
@@ -199,7 +200,7 @@ const PropertyDetails = () => {
                     }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                      e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                     }}
                   />
                 </div>

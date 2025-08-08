@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +16,7 @@ const ComparisonPage = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await fetch('http://localhost:5000/admin/approved-properties');
+        const response = await fetch(API_ENDPOINTS.ADMIN_APPROVED_PROPERTIES);
         const data = await response.json();
         setAvailableProperties(data);
       } catch (error) {
@@ -71,7 +72,7 @@ const ComparisonPage = () => {
       // Check if user is logged in
       const isLoggedIn = sessionStorage.getItem('user_id') && sessionStorage.getItem('role');
       
-      const response = await fetch('http://localhost:5000/api/compare-properties', {
+      const response = await fetch(API_ENDPOINTS.COMPARE_PROPERTIES, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -230,12 +231,12 @@ const ComparisonPage = () => {
                     >
                       <div className="tw-flex tw-items-center">
                         <img
-                          src={`http://localhost:5000/static/images/property_images/${getFirstImagePath(property)}`}
+                          src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                           alt={property.name}
                           className="tw-w-16 tw-h-16 tw-object-cover tw-rounded-md tw-mr-3"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                            e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                           }}
                         />
                         <div>
@@ -268,12 +269,12 @@ const ComparisonPage = () => {
                             &times;
                           </button>
                           <img
-                            src={`http://localhost:5000/static/images/property_images/${getFirstImagePath(property)}`}
+                            src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                             alt={property.name}
                             className="tw-w-full tw-h-32 tw-object-cover tw-rounded-md tw-mb-2"
                             onError={(e) => {
                               e.target.onerror = null;
-                              e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                              e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                             }}
                           />
                           <div className="tw-text-sm tw-font-medium">{property.name}</div>

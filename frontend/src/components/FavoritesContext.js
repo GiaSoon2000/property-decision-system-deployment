@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 const FavoritesContext = createContext();
@@ -18,7 +19,7 @@ export const FavoritesProvider = ({ children }) => {
 
     try {
       if (isUserLoggedIn()) {
-        const response = await fetch('http://localhost:5000/favorites', {
+        const response = await fetch(API_ENDPOINTS.FAVORITES, {
           credentials: 'include',
         });
         if (response.ok) {
@@ -65,7 +66,7 @@ export const FavoritesProvider = ({ children }) => {
     }
 
     try {
-      const url = `http://localhost:5000/favorites${addToFavorites ? '' : '/' + propertyId}`;
+      const url = `${API_ENDPOINTS.FAVORITES}\${1}`;
       const method = addToFavorites ? 'POST' : 'DELETE';
   
       const response = await fetch(url, {

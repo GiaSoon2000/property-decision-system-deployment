@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/AdminCreateUser.css';
@@ -71,7 +72,7 @@ const AdminCreateUser = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/admin/create-user', {
+      const response = await fetch(API_ENDPOINTS.ADMIN_CREATE_USER, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

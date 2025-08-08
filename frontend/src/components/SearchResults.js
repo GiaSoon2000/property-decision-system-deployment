@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link  } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -83,7 +84,7 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchAreas = async () => {
       try {
-        const response = await fetch('http://localhost:5000/areas');
+        const response = await fetch(API_ENDPOINTS.AREAS);
         const data = await response.json();
         setAreaOptions(data);
       } catch (error) {
@@ -99,8 +100,8 @@ const SearchResults = () => {
     const fetchOptions = async () => {
       try {
         const [bedroomsResponse, bathroomsResponse] = await Promise.all([
-          fetch('http://localhost:5000/bedrooms'),
-          fetch('http://localhost:5000/bathrooms')
+          fetch(API_ENDPOINTS.BEDROOMS),
+          fetch(API_ENDPOINTS.BATHROOMS)
         ]);
         
         const bedroomsData = await bedroomsResponse.json();
@@ -153,7 +154,7 @@ const SearchResults = () => {
   // Function to perform the search
   const performSearch = async (searchParams) => {
     try {
-      const response = await fetch(`http://localhost:5000/search?${searchParams.toString()}`);
+      const response = await fetch(`${API_ENDPOINTS.SEARCH}?\${1}`);
       const data = await response.json();
       
       // Filter properties based on maxAffordablePrice if salary is provided
@@ -409,12 +410,12 @@ const SearchResults = () => {
                     <div className="property-image-container">
                       {property.images && property.images.length > 0 ? (
                         <img
-                          src={`http://localhost:5000/static/images/property_images/${property.images[0]}`}
+                          src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                           alt={property.name}
                           className="property-image"
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                            e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                           } } />
                       ) : (
                         <div className="property-no-image">

@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/RegisterPage.css'; // We'll create this CSS file
@@ -57,7 +58,7 @@ const RegisterPage = () => {
             };
 
         try {
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch(API_ENDPOINTS.REGISTER, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

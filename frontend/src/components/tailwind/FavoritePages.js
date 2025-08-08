@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFavorites } from '../FavoritesContext';
@@ -12,7 +13,7 @@ const FavoritePages = () => {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const response = await fetch('http://localhost:5000/favorites', {
+        const response = await fetch(API_ENDPOINTS.FAVORITES, {
           credentials: 'include'
         });
         if (!response.ok) {
@@ -84,12 +85,12 @@ const FavoritePages = () => {
             >
               <div className="tw-relative tw-h-48">
                 <img
-                  src={`http://localhost:5000/static/images/property_images/${getFirstImage(property)}`}
+                  src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                   alt={property.name}
                   className="tw-w-full tw-h-full tw-object-cover tw-rounded-t-lg"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                    e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                   }}
                 />
               </div>

@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React from 'react';
 import { X } from 'lucide-react';
 
@@ -46,12 +47,12 @@ const PropertyComparison = ({
                 &times;
               </button>
               <img
-                src={`http://localhost:5000/static/images/property_images/${property.images[0]}`}
+                src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
                 alt={property.name}
                 className="tw-w-full tw-h-32 tw-object-cover tw-rounded-md tw-mb-2"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                  e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                 }}
               />
               <div className="tw-text-sm tw-font-medium">{property.name}</div>

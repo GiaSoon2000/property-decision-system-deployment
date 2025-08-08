@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/oldAdminDashboard.css';
@@ -25,7 +26,7 @@ const AdminDashboard = () => {
 
     const fetchPendingProperties = async () => {
         try {
-            const response = await fetch('http://localhost:5000/admin/pending-properties', { credentials: 'include' });
+            const response = await fetch(API_ENDPOINTS.ADMIN_PENDING_PROPERTIES, { credentials: 'include' });
             if (response.ok) {
                 const data = await response.json();
                 console.log('Fetched Pending Properties:', data); // Debug log
@@ -40,7 +41,7 @@ const AdminDashboard = () => {
 
     const fetchApprovedProperties = async () => {
         try {
-            const response = await fetch('http://localhost:5000/admin/approved-properties', { credentials: 'include' });
+            const response = await fetch(API_ENDPOINTS.ADMIN_APPROVED_PROPERTIES, { credentials: 'include' });
             if (response.ok) {
                 const data = await response.json();
                 setApprovedProperties(data);
@@ -54,7 +55,7 @@ const AdminDashboard = () => {
 
     const fetchRejectedProperties = async () => {
         try {
-            const response = await fetch('http://localhost:5000/admin/rejected-properties', { credentials: 'include' });
+            const response = await fetch(API_ENDPOINTS.ADMIN_REJECTED_PROPERTIES, { credentials: 'include' });
             if (response.ok) {
                 const data = await response.json();
                 setRejectedProperties(data);
@@ -68,7 +69,7 @@ const AdminDashboard = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('http://localhost:5000/admin/users', { credentials: 'include' });
+            const response = await fetch(API_ENDPOINTS.ADMIN_USERS, { credentials: 'include' });
             if (response.ok) {
                 const data = await response.json();
                 setUsers(data);
@@ -83,7 +84,7 @@ const AdminDashboard = () => {
     const fetchRens = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5000/admin/rens', {
+            const response = await fetch(API_ENDPOINTS.ADMIN_RENS, {
                 credentials: 'include'
             });
             if (!response.ok) {
@@ -104,7 +105,7 @@ const AdminDashboard = () => {
         try {
             console.log(`Starting approval process for property ID: ${id}`);
             
-            const response = await fetch(`http://localhost:5000/admin/property/${id}/approve`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_APPROVE}/\${1}/approve`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -148,7 +149,7 @@ const AdminDashboard = () => {
         if (!reason) return; // If no reason is provided, cancel the operation
         
         try {
-            const response = await fetch(`http://localhost:5000/admin/property/${id}/reject`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_REJECT}/\${1}/reject`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json'
@@ -181,7 +182,7 @@ const AdminDashboard = () => {
 
     const handleBanUser = async (userId) => {
         try {
-            const response = await fetch(`http://localhost:5000/admin/user/${userId}/ban`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_BAN_USER}/\${1}/ban`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -235,7 +236,7 @@ const AdminDashboard = () => {
 
     const handleVerifyRen = async (renId) => {
         try {
-            const response = await fetch(`http://localhost:5000/admin/ren/${renId}/verify`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_VERIFY_REN}/\${1}/verify`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {

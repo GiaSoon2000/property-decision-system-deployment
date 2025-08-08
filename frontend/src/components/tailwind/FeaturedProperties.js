@@ -1,3 +1,4 @@
+import API_ENDPOINTS from '../config';
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -36,7 +37,7 @@ const FeaturedProperties = ({ properties = [] }) => {
                     src={property.imageUrls?.[0]}
                     alt={property.name}
                     onError={(e) => {
-                      e.target.src = 'http://localhost:5000/static/images/property_images/default-property.jpg';
+                      e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;
                     }}
                     className="tw-w-full tw-h-full tw-object-cover"
                   />
