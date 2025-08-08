@@ -5,8 +5,8 @@ from functools import wraps
 from flask import abort
 from datetime import datetime
 from enum import Enum
-import psycopg
-import psycopg.extras
+import psycopg2
+import psycopg2.extras
 import os
 from werkzeug.utils import secure_filename
 from config import Config
@@ -58,14 +58,14 @@ def connect_db():
         # 檢查是否使用 PostgreSQL
         if os.getenv('DATABASE_URL'):
             # 使用 DATABASE_URL 環境變量
-            conn = psycopg.connect(os.getenv('DATABASE_URL'))
+            conn = psycopg2.connect(os.getenv('DATABASE_URL'))
         else:
             # 使用單獨的環境變量
-            conn = psycopg.connect(
+            conn = psycopg2.connect(
                 host=os.getenv('POSTGRES_HOST', 'dpg-d2aqb7fdiees73e29qt0-a.singapore-postgres.render.com'),
                 user=os.getenv('POSTGRES_USER', 'property_db_mk0k_user'),
                 password=os.getenv('POSTGRES_PASSWORD', 'GFL0ceMFr7z9zG2yI7XURfT59SlOP8so'),
-                dbname=os.getenv('POSTGRES_DB', 'property_db_mk0k'),
+                database=os.getenv('POSTGRES_DB', 'property_db_mk0k'),
                 port=os.getenv('POSTGRES_PORT', '5432')
             )
         return conn
