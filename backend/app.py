@@ -25,7 +25,7 @@ if not Config.init_app(app):
     raise RuntimeError("Failed to initialize application configuration")
 app.secret_key = "WW15257Z!"  # Use a secret key for session management
 bcrypt = Bcrypt(app)
-CORS(app, origins=['http://localhost:3000', 'https://your-frontend-domain.onrender.com'], supports_credentials=True, methods=['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'])  # Added DELETE and PUT methods
+CORS(app, origins=['http://localhost:3000', 'https://property-frontend-mk0z.onrender.com'], supports_credentials=True, methods=['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'])  # Added DELETE and PUT methods
 
 
 # Update these configurations to ensure consistency
