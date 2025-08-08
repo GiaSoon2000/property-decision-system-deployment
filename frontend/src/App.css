@@ -1,0 +1,532 @@
+/* General App Styles */
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.login-container{
+  padding: 20px;
+  padding-top: 60px;
+}
+
+.register-container{
+  padding: 20px;
+  padding-top: 60px;
+}
+
+/* Header Styles */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  color: #000000;
+  height: 60px;  /* Adjust the header height */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /*Optional: Add shadow for better visibility */
+}
+
+.user-btn{
+  background-color: transparent;
+  /* color: #003366;
+  border: 2px solid #003366; */
+  color: #00b894;
+  border: 2px solid #00b894;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.username-dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.logged-in-user {
+  position: relative;
+}
+
+.user-dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  min-width: 120px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+.dropdown-content a,
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.dropdown-content a:hover,
+.dropdown-content button:hover {
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #00b894;
+  /* color: #003366; */
+}
+
+/* Navigation Styles */
+.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+/* Link Styles */
+.nav-link {
+  color: #000000;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.nav-link.active {
+  background-color: #00b894;
+  /* background-color: #003366; */
+  color: white;
+}
+
+/* Add these styles to your App.css file */
+
+.notification-container {
+  position: relative;
+  margin-right: 1rem;
+}
+
+/* .notification-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  position: relative;
+  color: #4b5563;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+ 
+.notification-btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.notification-btn:hover {
+  color: #2563eb;
+}
+
+.bell-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.key-icon {
+  width: 24px;
+  height: 15px;
+}
+
+.nav-icon{
+  width: 25px;
+  height: 15px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 12px;
+  border-radius: 9999px;
+  height: 20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 50;
+  border: 1px solid #e5e7eb;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1f2937;
+}
+
+.mark-all-read {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+
+  /* background: none;
+  border: none;
+  color: #0066cc;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 8px; */
+}
+
+.mark-all-read:hover {
+  text-decoration: underline;
+}
+
+.notification-list {
+  padding: 0.5rem 0;
+}
+
+.notification-item {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item:hover {
+  background-color: #f3f4f6;
+}
+
+.notification-item.unread {
+  background-color: #eff6ff;
+}
+
+.notification-item.unread:hover {
+  background-color: #dbeafe;
+}
+
+.notification-message {
+  margin: 0 0 0.5rem 0;
+  color: #1f2937;
+  font-size: 0.875rem;
+}
+
+.notification-time {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.no-notifications {
+  padding: 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* Adjust existing user-actions class to accommodate notifications */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.login-register-btn {
+  background-color: transparent;
+  /* color: #003366;
+  border: 2px solid #003366; */
+  color: #00b894;
+  border: 2px solid #00b894;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.login-register-btn:hover {
+  background-color: #00b894;
+  /* background-color: #003366; */
+  color: white;
+}
+
+.add-listing-btn {
+  background-color: #00b894;
+  /* background-color: #003366; */
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Content padding for sticky header */
+.content {
+  padding-top: 60px;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+/* Global body style */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Content padding for sticky header */
+.content {
+  padding-top: 60px; /* Adjust this based on the header height */
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.property-list {
+  padding: 20px;
+}
+
+.home-search{
+  padding-top: 60px;
+}
+
+/* New Search Results Layout (60% - 40%) */
+
+/* Main container for search results and map */
+.search-results-container {
+  display: flex;
+  height: calc(100vh - 60px); /* Full height minus the header */
+  padding-top: 60px;
+  padding-bottom: 20px;
+}
+
+/* Left side (search filters and property cards) */
+/* .results-side {
+  flex: 0 0 60%;
+  padding: 10px;
+  margin-left: 50px;
+  overflow-y: auto;
+  box-sizing: border-box;
+} */
+
+/* Right side (map) */
+.map-side {
+  flex: 0 0 33%; /* 35% width for the map */
+  position: relative;
+  padding: 10px;
+  height: 100%;
+  border-radius: 15px; /* Adjust this value as needed */
+  overflow: hidden; /* This ensures the content doesn't overflow the rounded corners */
+}
+
+.leaflet-container {
+  border-radius: 15px; /* Should match the border-radius of .map-side */
+}
+
+.leaflet-container .leaflet-pane {
+  z-index: 1;
+}
+
+.leaflet-container .leaflet-control-container {
+  z-index: 2;
+}
+
+/* Property List Styling */
+.property-item h4 {
+  margin-bottom: 10px;
+}
+
+.property-item p {
+  margin: 5px 0;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+  .search-results-container {
+    flex-direction: column;
+  }
+
+  .results-side, .map-side {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .map-side {
+    height: 400px; /* Adjust map height for small screens */
+  }
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-container select,
+.filter-container input,
+.filter-container button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.property-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.property-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.property-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.property-actions button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.property-actions button:hover {
+  background-color: #e0e0e0;
+}
+
+/* AdminDashboard.js show RENs */
+.user-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-active {
+  color: green;
+  font-weight: bold;
+}
+
+.status-banned {
+  color: red;
+  font-weight: bold;
+}
+
+.ban-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.ban-button:hover {
+  background-color: #c82333;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}

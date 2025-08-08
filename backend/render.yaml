@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: property-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: hypercorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: MYSQL_HOST
+        value: your-mysql-host
+      - key: MYSQL_USER
+        value: your-mysql-user
+      - key: MYSQL_PASSWORD
+        value: your-mysql-password
+      - key: MYSQL_DB
+        value: your-mysql-database
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: FLASK_SECRET_KEY
+        generateValue: true 

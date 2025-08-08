@@ -1,0 +1,131 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f3f4f6;
+}
+
+.illustration-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.illustration {
+    max-width: 80%;
+    height: auto;
+    border-radius: 5%;
+}
+
+.form-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    background-color: rgb(236, 248, 241);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-card h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-form input {
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+.forgot-password {
+    text-align: right;
+}
+
+.forgot-password a {
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.login-button {
+    background-color: #0d9488;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background-color: #0f766e;
+}
+
+.login-button[type="button"] {
+    background-color: #0d9488;
+    color: white;
+}
+
+.register-link {
+    text-align: center;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+.register-link a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.illustration-container .carousel {
+    height: 100%;
+}
+
+.illustration-container .carousel .slide img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel .control-dots {
+    padding: 0;
+}

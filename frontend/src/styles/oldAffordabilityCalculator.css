@@ -1,0 +1,104 @@
+.affordability-calculator {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 60px;
+  font-family: Arial, sans-serif;
+}
+
+.calculator-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.calculator-section {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.calculator-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.input-section, .result-section {
+  padding: 20px;
+  padding-right: 30px;
+  background-color: #EBF7F6;
+  border-radius: 8px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  accent-color: #0EC12F;
+}
+
+.result-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.monthly-payment {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.payment-note {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.result-details {
+  margin-bottom: 20px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.get-approved-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #0EC12F;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.get-approved-button:hover {
+  background-color: #56e26f;
+}
+
+@media (max-width: 768px) {
+  .calculator-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,431 @@
+/* Container layout */
+.search-results-container {
+    display: flex;
+    gap: 2rem;
+    padding: 60px 2rem 2rem 1rem;
+  }
+  
+  .results-side {
+    flex: 0 0 60%;
+    padding: 10px;
+    margin-left: 50px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  
+  /* Add custom scrollbar styles */
+  .results-side::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .results-side::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 10px;
+  }
+  
+  .results-side::-webkit-scrollbar-thumb {
+    background: rgba(76, 175, 80, 0.4);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+  
+  .results-side::-webkit-scrollbar-thumb:hover,
+  .results-side::-webkit-scrollbar-thumb:active {
+    background: rgba(76, 175, 80, 1);
+  }
+  
+  /* Firefox */
+  .results-side {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(76, 175, 80, 0.4) #ffffff;
+  }
+  
+  .map-side {
+    flex: 0 0 33%;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+  
+  /* Filter container styles */
+  .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-container select,
+  .filter-container input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 150px;
+  }
+  
+  .filter-container button {
+    padding: 0.5rem 1rem;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .filter-container button:hover {
+    background: #1d4ed8;
+  }
+  
+  /* Property list styles */
+  .property-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 100%;
+    width: 95%;
+  }
+  
+  .property-item {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 200px;
+  }
+  
+  .property-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .property-image-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .property-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .search-property-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding-bottom: 0%;
+  }
+  
+  .property-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .property-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+  }
+  
+  .property-location {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .property-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2563eb;
+    /* padding-right: 4rem; */
+  }
+  
+  .search-property-details {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .property-numBed{
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    padding-top: 1rem;
+  }
+  
+  .property-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .property-actions button {
+    padding: 0rem 1.2rem;
+    border: 1px solid #2563eb;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    /* width: 80px; */
+  }
+
+  .property-actions-button {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2563eb;
+    background-color: #ffffff;
+    border: 1px solid #2563eb;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+  }
+  
+  .property-actions-button:hover {
+    color: #ffffff;
+    background-color: #2563eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .property-actions-button:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
+  }
+  
+  .property-actions-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .property-actions button:first-child {
+    background: #2563eb;
+    color: white;
+  }
+  
+  .property-actions button:last-child {
+    background: white;
+    color: white;
+    border: 1px solid white;
+  }
+  
+  .property-actions button:hover {
+    opacity: 0.9;
+  }
+
+  .favorite-btn {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #2563eb;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: #2563eb;
+  }
+  
+  .favorite-btn.favorited {
+    background-color: #2563eb;
+    color: #fff;
+  }
+  
+  .favorite-btn:hover {
+    opacity: 0.9;
+  }
+  
+  .compare-btn {
+    background-color: #e2e8f0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+  }
+  
+  .compare-btn:hover {
+    background-color: #cbd5e1;
+  }
+  
+  .compare-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  
+  /* Responsive design */
+  @media (max-width: 1200px) {
+    .search-results-container {
+      flex-direction: column;
+    }
+    
+    .map-side {
+      position: static;
+      height: 400px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .property-item {
+      grid-template-columns: 1fr;
+    }
+    
+    .property-image-container {
+      height: 200px;
+    }
+  }
+
+  /* Position the hidden button container to align at the bottom of the page */
+.hidden-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  /* Style for the button itself */
+  .compare-trigger-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+  .heart-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.2s ease;
+}
+
+.heart-button:hover {
+  transform: scale(1.1);
+}
+
+.heart-icon {
+  width: 24px;
+  height: 24px;
+  stroke: #666; /* Default gray color */
+  stroke-width: 2;
+  transition: all 0.2s ease;
+}
+
+.heart-icon.favorited {
+  fill: #ff4444;
+  stroke: #ff4444;
+}
+
+.heart-icon:hover {
+  stroke: #ff4444;
+}
+/* Optional: Add a focus outline for accessibility */
+/* .heart-button:focus {
+  outline: 2px solid #cc0000;
+  outline-offset: 2px;
+  border-radius: 50%;
+} */
+
+.property-item.selected {
+  border: 2px solid #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Add these new styles */
+.salary-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.info-icon {
+  margin-left: 8px;
+  color: #666;
+  cursor: help;
+  font-size: 18px;
+  position: relative;
+}
+
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  background-color: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  width: 350px;
+  z-index: 1000;
+  top: -10px;
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Add a small arrow at the bottom of tooltip */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.info-icon:hover .tooltip {
+  visibility: visible;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.pagination-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  color: #2563eb;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination-button:hover {
+  background-color: #f8fafc;
+}
+
+.pagination-button.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

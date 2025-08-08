@@ -1,0 +1,279 @@
+.affordability-calculator {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 60px;
+  font-family: Arial, sans-serif;
+}
+
+.calculator-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.calculator-section {
+  background-color: #e4fcecfd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 500px;
+  align-items: center;
+  margin-left: 23%;
+}
+
+.loan-input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.loan-input-group label{
+  font-weight: bold;
+}
+
+.calculator-section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: left;
+}
+
+.calculator-title {
+  padding-top: 20px;
+}
+
+.input-section, .result-section {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+  margin-bottom: 20px;
+  padding-bottom: 2px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input-label-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.input-label-wrapper label {
+  font-weight: bold;
+}
+
+.input-label-wrapper input[type="number"] {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  margin: 0px 0px 20px 300px;
+}
+
+.input-group input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.input-group input[type="range"] {
+  width: 100%;
+  margin-bottom: 5px;
+  accent-color: #00C853;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #666;
+}
+
+.input-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.result-section {
+  background-color: #f0f8ff;
+}
+
+.result-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.monthly-payment {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.payment-note {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.result-details {
+  margin-bottom: 20px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 5px;
+  
+}
+
+.result-description {
+  font-size: 14px;
+  color: #666;
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.next-step-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 80px;
+}
+
+.next-step-section h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.get-approved-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00C853;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.get-approved-button:hover {
+  background-color: #00A84E;
+}
+
+@media (max-width: 768px) {
+  .calculator-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.household-calculator-grid {
+  margin-top: 20px;
+}
+
+.household-input-section {
+  background-color: #ffffff;
+}
+
+.household-result-section {
+  background-color: #f0f8ff;
+}
+
+.household-next-step-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 40px;
+}
+
+.household-monthly-payment {
+  color: #00C853;
+}
+
+.household-result-description {
+  line-height: 1.6;
+}
+
+.eligibility-status .eligible {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.eligibility-status .not-eligible {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.household-input-label-wrapper input[type="number"] {
+  width: 80px;
+  margin: 0px 0px 20px 240px;
+}
+
+.suggest-button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.suggest-me-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.suggest-me-button:hover {
+  background-color: #45a049;
+}
+
+.suggest-me-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.household-suggest-button {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.household-suggest-button .suggest-me-button {
+  width: 100%;
+  max-width: 400px;
+  background-color: #2196F3;  /* Different color to distinguish from DSR button */
+}
+
+.household-suggest-button .suggest-me-button:hover {
+  background-color: #1976D2;
+}
+
+.household-suggest-button .suggest-me-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

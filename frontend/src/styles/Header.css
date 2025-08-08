@@ -1,0 +1,30 @@
+.user-section {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: 150px;
+    text-align: left;
+}
+
+.dropdown.show {
+    display: block;
+}
+
+.dropdown a, .dropdown button {
+    display: block;
+    padding: 10px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}

@@ -1,0 +1,387 @@
+/* RenDashboard.css */
+.ren-dashboard {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 80px;
+    background-color: #f5f7fa;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-header h2 {
+    font-size: 28px;
+    margin: 0;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.submit-property-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.submit-property-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #fecaca;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ren-dashboard .dashboard-sections {
+    display: grid;
+    gap: 24px;
+    padding: 0px;
+}
+
+.dashboard-section {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.dashboard-section:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.ren-dashboard .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    list-style: none;
+    padding: 15px 0px 15px 0px;
+}
+
+.ren-dashboard .section-header:hover {
+    background-color: #f1f5f9;
+}
+
+.ren-dashboard .section-header::-webkit-details-marker {
+    display: none;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-content h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #334155;
+    font-weight: 600;
+}
+
+.property-count {
+    background-color: #e2e8f0;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #475569;
+    font-weight: 500;
+}
+
+.properties-list {
+    display: grid;
+    padding: 15px;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.properties-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.properties-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.properties-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.properties-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.property-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.ren-dashboard .property-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    border-bottom: #ffffff;
+}
+
+.property-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
+}
+
+.property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.property-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.property-type {
+    background-color: #e9ecef;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.property-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.property-details p {
+    margin: 8px 0;
+    color: #64748b;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.property-price {
+    text-align: right;
+}
+
+.property-price .price {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    color: #4CAF50;
+}
+
+.property-price .interest-type {
+    color: #64748b;
+    margin: 5px 0 0 0;
+    font-size: 14px;
+}
+
+.rejected-property {
+    border-left: 4px solid #dc3545;
+}
+
+.property-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.property-status.approved {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.property-status.pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.property-status.rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.rejection-details {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff5f5;
+    border-radius: 8px;
+    border: 1px solid #fee2e2;
+}
+
+.rejection-reason {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+}
+
+.rejection-reason p {
+    margin: 0;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.rejection-reason strong {
+    color: #991b1b;
+    font-weight: 600;
+}
+
+.rejection-date {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 10px !important;
+}
+
+.no-properties {
+    text-align: center;
+    color: #94a3b8;
+    padding: 30px;
+    font-size: 15px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .ren-dashboard {
+        padding: 15px;
+        padding-top: 70px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .property-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .property-price {
+        text-align: left;
+    }
+
+    .properties-list {
+        grid-template-columns: 1fr;
+    }
+
+    .submit-property-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Loading state */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Add these new styles for better organization */
+.property-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 12px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 14px;
+    color: #334155;
+    font-weight: 500;
+}
+
+.property-specs {
+    display: flex;
+    gap: 20px;
+    padding: 12px 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.ren-dashboard .section-header::after {
+    content: "";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+/* When the section is open, rotate the arrow */
+.ren-dashboard .section-header.open::after {
+    transform: translateY(-50%) rotate(-135deg);
+}
