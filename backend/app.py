@@ -54,10 +54,10 @@ class NotificationType(Enum):
 # Database connection setup
 def connect_db():
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="WW15257Z",
-        database="property_db",
+        host=os.getenv('MYSQL_HOST', 'localhost'),
+        user=os.getenv('MYSQL_USER', 'root'),
+        password=os.getenv('MYSQL_PASSWORD', 'WW15257Z'),
+        database=os.getenv('MYSQL_DB', 'property_db'),
         connect_timeout=10,  # Add timeout settings
         pool_size=5,        # Add connection pooling
         pool_name="mypool"
