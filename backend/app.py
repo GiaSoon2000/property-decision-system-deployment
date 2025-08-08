@@ -193,7 +193,7 @@ def login():
 
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
 
         cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
         user = cursor.fetchone()
@@ -231,13 +231,13 @@ def logout():
 @app.route('/properties', methods=['GET'])
 def get_properties():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
 
     try:
         query = """
             SELECT p.*, 
-                   GROUP_CONCAT(DISTINCT pi.id) as image_ids,
-                   GROUP_CONCAT(DISTINCT pi.image_path) as image_paths,
+                   STRING_AGG(DISTINCT pi.id::text, ',') as image_ids,
+                   STRING_AGG(DISTINCT pi.image_path, ',') as image_paths,
                    COUNT(DISTINCT pi.id) as image_count
             FROM properties p
             LEFT JOIN property_images pi ON p.id = pi.property_id
@@ -247,19 +247,25 @@ def get_properties():
         cursor.execute(query)
         properties = cursor.fetchall()
         
-        for property in properties:
-            if property['image_ids'] and property['image_paths']:
+        # 將結果轉換為字典格式
+        columns = [desc[0] for desc in cursor.description]
+        properties_dict = []
+        
+        for row in properties:
+            property_dict = dict(zip(columns, row))
+            if property_dict['image_ids'] and property_dict['image_paths']:
                 # For regular users, we only need the image paths
-                image_paths = property['image_paths'].split(',')
-                property['images'] = [path.strip() for path in image_paths if path.strip()]
+                image_paths = property_dict['image_paths'].split(',')
+                property_dict['images'] = [path.strip() for path in image_paths if path.strip()]
             else:
-                property['images'] = ['default-property.jpg']
+                property_dict['images'] = ['default-property.jpg']
             
             # Clean up temporary fields
-            del property['image_ids']
-            del property['image_paths']
+            del property_dict['image_ids']
+            del property_dict['image_paths']
+            properties_dict.append(property_dict)
         
-        return jsonify(properties)
+        return jsonify(properties_dict)
     except Exception as e:
         print("Error fetching properties:", str(e))
         return jsonify({"error": str(e)}), 500
@@ -283,13 +289,13 @@ def search_properties():
     furnishing_status = request.args.get('furnishingStatus', '')
 
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
 
     try:
         # Modified query to include agent information
         query = """
             SELECT p.*, 
-                   GROUP_CONCAT(DISTINCT pi.image_path) as images,
+                   STRING_AGG(DISTINCT pi.image_path::text, \',\') as images,
                    COUNT(DISTINCT pi.id) as image_count,
                    u.username as agent_name,
                    u.phone as agent_phone
@@ -384,7 +390,7 @@ def search_properties():
 @app.route('/areas', methods=['GET'])
 def get_areas():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     
     try:
         query = """
@@ -406,7 +412,7 @@ def get_areas():
 @app.route('/bedrooms', methods=['GET'])
 def get_bedrooms():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     
     try:
         query = """
@@ -428,7 +434,7 @@ def get_bedrooms():
 @app.route('/bathrooms', methods=['GET'])
 def get_bathrooms():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     
     try:
         query = """
@@ -564,7 +570,7 @@ def get_notifications(user_id):
         
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         cursor.execute("""
             SELECT n.*, p.name as property_name 
@@ -634,7 +640,7 @@ def mark_all_notifications_read(user_id):
 @app.route('/admin/pending-properties', methods=['GET'])
 def get_pending_properties():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM pending_properties WHERE status = 'pending'")
     pending_properties = cursor.fetchall()
     cursor.close()
@@ -645,7 +651,7 @@ def get_pending_properties():
 @admin_required
 def approve_property(id):
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     
     try:
         # Get pending property first
@@ -763,7 +769,7 @@ def reject_property(id):
     reason = data.get('reason', 'No reason provided')
     
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     
     try:
         # First check if property exists
@@ -799,7 +805,7 @@ def reject_property(id):
 @admin_required
 def get_users():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
     cursor.close()
@@ -913,7 +919,7 @@ def create_property():
 @admin_required
 def get_property(id):
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     try:
         cursor.execute("SELECT * FROM properties WHERE id = %s", (id,))
         property_data = cursor.fetchone()
@@ -938,7 +944,7 @@ def get_property(id):
 def edit_property(id):
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
 
         # Get form data with optional field handling
         name = request.form.get('name', '')
@@ -1069,7 +1075,7 @@ def edit_property(id):
 def delete_property_image(property_id, image_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # First get the image path
         cursor.execute("""
@@ -1125,7 +1131,7 @@ def delete_property(id):
 # Helper function to get property images
 def fetch_property_images(property_id):  # Renamed the function here
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     try:
         cursor.execute("""
             SELECT id, image_path, created_at 
@@ -1153,7 +1159,7 @@ def fetch_property_images(property_id):  # Renamed the function here
 def get_property_images(id):
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         images = fetch_property_images(id)  # Use the renamed helper function here
         cursor.close()
         conn.close()
@@ -1167,13 +1173,13 @@ def get_property_images(id):
 @app.route('/admin/approved-properties', methods=['GET'])
 def fetch_approved_properties():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     
     try:
         query = """
             SELECT p.*, 
-                   GROUP_CONCAT(DISTINCT pi.id) as image_ids,
-                   GROUP_CONCAT(DISTINCT pi.image_path) as image_paths,
+                   STRING_AGG(DISTINCT pi.id::text, \',\') as image_ids,
+                   STRING_AGG(DISTINCT pi.image_path::text, \',\') as image_paths,
                    COUNT(DISTINCT pi.id) as image_count
             FROM properties p
             LEFT JOIN property_images pi ON p.id = pi.property_id
@@ -1213,7 +1219,7 @@ def fetch_approved_properties():
 @app.route('/admin/rejected-properties', methods=['GET'])
 def fetch_rejected_properties():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM pending_properties WHERE status='rejected'")
     properties = cursor.fetchall()
     cursor.close()
@@ -1226,7 +1232,7 @@ def fetch_rejected_properties():
 @admin_required
 def get_rens():
     conn = connect_db()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     
     try:
         cursor.execute("""
@@ -1259,7 +1265,7 @@ def get_rens():
 def verify_ren_status(ren_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # First check if user exists and is a REN
         cursor.execute("""
@@ -1398,7 +1404,7 @@ def notify_admins_new_pending_property(property_data):
     """Send notifications to all admin users when a new property is submitted for approval"""
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # Get all admin users
         cursor.execute("""
@@ -1471,7 +1477,7 @@ def get_user_info():
     
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         cursor.execute("""
             SELECT 
@@ -1514,7 +1520,7 @@ def get_ren_properties(ren_id):
     """Get all properties (approved, pending, and rejected) for a REN"""
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # Get approved properties
         cursor.execute("""
@@ -1583,7 +1589,7 @@ def verify_ren(ren_id):
     """Verify if a user is a REN and is active"""
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         cursor.execute("""
             SELECT id 
@@ -1614,12 +1620,12 @@ def get_favorites():
         
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # Modified query to include agent information
         cursor.execute("""
             SELECT p.*,
-                   GROUP_CONCAT(DISTINCT pi.image_path) as images,
+                   STRING_AGG(DISTINCT pi.image_path::text, \',\') as images,
                    COUNT(DISTINCT pi.id) as image_count,
                    u.username as agent_name,
                    u.phone as agent_phone
@@ -1731,13 +1737,13 @@ def remove_favorite(property_id):
 def get_detail_property(property_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
 
         # Modified query to include user (agent) information
         query = """
             SELECT p.*, 
-                   GROUP_CONCAT(DISTINCT pi.id) as image_ids,
-                   GROUP_CONCAT(DISTINCT pi.image_path) as image_paths,
+                   STRING_AGG(DISTINCT pi.id::text, \',\') as image_ids,
+                   STRING_AGG(DISTINCT pi.image_path::text, \',\') as image_paths,
                    COUNT(DISTINCT pi.id) as image_count,
                    u.phone as agent_phone,
                    u.username as agent_name,
@@ -1801,7 +1807,7 @@ def get_detail_property(property_id):
 def get_recommended_properties():
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
 
         # First get user preferences
         cursor.execute("""
@@ -1819,7 +1825,7 @@ def get_recommended_properties():
         # Query properties matching user preferences
         query = """
             SELECT p.*, 
-                   GROUP_CONCAT(DISTINCT pi.image_path) as images,
+                   STRING_AGG(DISTINCT pi.image_path::text, \',\') as images,
                    COUNT(DISTINCT pi.id) as image_count,
                    u.username as agent_name,
                    u.phone as agent_phone
@@ -1896,7 +1902,7 @@ def get_user_profile(user_id):
         
     try:
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # Different queries based on user role
         base_query = """
@@ -2041,7 +2047,7 @@ class PropertyAIAssistant:
     async def generate_response(self, user_input, user_context=None, chat_history=None):
         try:
             conn = connect_db()
-            cursor = conn.cursor(dictionary=True)
+            cursor = conn.cursor()
             
             property_context = ""
 
@@ -2383,7 +2389,7 @@ class PropertyAIAssistant:
                         COUNT(*) as count,
                         MIN(price) as min_price,
                         MAX(price) as max_price,
-                        GROUP_CONCAT(DISTINCT area) as areas
+                        STRING_AGG(DISTINCT area::text, \',\') as areas
                     FROM properties
                     WHERE status = 'approved'
                     GROUP BY type
@@ -2523,7 +2529,7 @@ async def compare_properties():
             return jsonify({"error": "No properties provided"}), 400
             
         conn = connect_db()
-        cursor = conn.cursor(dictionary=True)
+        cursor = conn.cursor()
         
         # Initialize user_preferences
         user_preferences = None
