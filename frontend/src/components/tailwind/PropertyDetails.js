@@ -127,7 +127,7 @@ const PropertyDetails = () => {
   useEffect(() => {
     const fetchPropertyDetails = async () => {
       try {
-        const response = await fetch(`${API_ENDPOINTS.PROPERTY_DETAIL}/\${1}`);
+        const response = await fetch(`${API_ENDPOINTS.PROPERTY_DETAIL}/${id}`);
         const data = await response.json();
         setProperty(data);
       } catch (error) {

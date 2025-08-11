@@ -154,8 +154,22 @@ const SearchResults = () => {
   // Function to perform the search
   const performSearch = async (searchParams) => {
     try {
-      const response = await fetch(`${API_ENDPOINTS.SEARCH}?\${1}`);
+      const response = await fetch(`${API_ENDPOINTS.SEARCH}?${searchParams.toString()}`);
+      
+      if (!response.ok) {
+        console.error('Search request failed:', response.status, response.statusText);
+        setProperties([]);
+        return;
+      }
+      
       const data = await response.json();
+      
+      // Ensure data is an array
+      if (!Array.isArray(data)) {
+        console.error('Search response is not an array:', data);
+        setProperties([]);
+        return;
+      }
       
       // Filter properties based on maxAffordablePrice if salary is provided
       const affordableProperties = maxAffordablePrice
@@ -165,6 +179,7 @@ const SearchResults = () => {
       setProperties(affordableProperties);
     } catch (error) {
       console.error('Error fetching properties:', error);
+      setProperties([]);
     }
   };
 
