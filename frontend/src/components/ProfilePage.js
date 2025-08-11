@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ProfilePage.css';
+import API_ENDPOINTS from '../config';
 
 const ProfilePage = () => {
     const navigate = useNavigate();
@@ -21,9 +22,9 @@ const ProfilePage = () => {
                     return;
                 }
 
-                console.log('Making fetch request to:', `${API_ENDPOINTS.USER_PROFILE}/\${1}`);
+                console.log('Making fetch request to:', `${API_ENDPOINTS.USER_PROFILE}/${userId}`);
 
-                const response = await fetch(`${API_ENDPOINTS.USER_PROFILE}/\${1}`, {
+                const response = await fetch(`${API_ENDPOINTS.USER_PROFILE}/${userId}`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
@@ -65,7 +66,7 @@ const ProfilePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${API_ENDPOINTS.UPDATE_PROFILE}/\${1}`, {
+            const response = await fetch(`${API_ENDPOINTS.UPDATE_PROFILE}/${userData.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -170,8 +170,8 @@ const PropertyDetails = () => {
             <div className="tw-aspect-[4/3] tw-relative tw-overflow-hidden tw-rounded-lg tw-shadow-lg tw-h-[280px]">
               <img
                 src={property.images && property.images.length > 0
-                  ? ``${API_ENDPOINTS.STATIC_IMAGES}/${property.images[activeImage].image_path}`
-                  : '`${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg'}
+                  ? `${API_ENDPOINTS.STATIC_IMAGES}/${property.images[activeImage].image_path}`
+                  : `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`}
                 alt={`Property ${property.name}`}
                 className="tw-w-full tw-h-full tw-object-cover"
                 onError={(e) => {
@@ -191,7 +191,7 @@ const PropertyDetails = () => {
                   className="tw-aspect-[4/3] tw-relative tw-overflow-hidden tw-rounded-lg tw-shadow-lg tw-h-[85px]"
                 >
                   <img
-                    src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                    src={`${API_ENDPOINTS.STATIC_IMAGES}/${image.image_path}`}
                     alt={`Property ${property.name}`}
                     className="tw-w-full tw-h-full tw-object-cover tw-cursor-pointer"
                     onClick={() => {
