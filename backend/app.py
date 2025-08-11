@@ -136,7 +136,7 @@ def register():
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     try:
         # Insert user details
@@ -194,7 +194,7 @@ def login():
 
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
         user = cursor.fetchone()
@@ -232,7 +232,7 @@ def logout():
 @app.route('/properties', methods=['GET'])
 def get_properties():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     try:
         query = """
@@ -391,7 +391,7 @@ def search_properties():
 @app.route('/areas', methods=['GET'])
 def get_areas():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     
     try:
         query = """
@@ -413,7 +413,7 @@ def get_areas():
 @app.route('/bedrooms', methods=['GET'])
 def get_bedrooms():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     
     try:
         query = """
@@ -435,7 +435,7 @@ def get_bedrooms():
 @app.route('/bathrooms', methods=['GET'])
 def get_bathrooms():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     
     try:
         query = """
@@ -478,7 +478,7 @@ def submit_new_property():
         
     try:      
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Extract form data
         form_data = {
@@ -571,7 +571,7 @@ def get_notifications(user_id):
         
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         cursor.execute("""
             SELECT n.*, p.name as property_name 
@@ -600,7 +600,7 @@ def mark_notification_read(notification_id):
         
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         cursor.execute("""
             UPDATE notifications 
@@ -619,7 +619,7 @@ def mark_notification_read(notification_id):
 def mark_all_notifications_read(user_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         cursor.execute("""
             UPDATE notifications 
@@ -641,7 +641,7 @@ def mark_all_notifications_read(user_id):
 @app.route('/admin/pending-properties', methods=['GET'])
 def get_pending_properties():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("SELECT * FROM pending_properties WHERE status = 'pending'")
     pending_properties = cursor.fetchall()
     cursor.close()
@@ -652,7 +652,7 @@ def get_pending_properties():
 @admin_required
 def approve_property(id):
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     
     try:
         # Get pending property first
@@ -770,7 +770,7 @@ def reject_property(id):
     reason = data.get('reason', 'No reason provided')
     
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     
     try:
         # First check if property exists
@@ -806,7 +806,7 @@ def reject_property(id):
 @admin_required
 def get_users():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
     cursor.close()
@@ -858,7 +858,7 @@ def create_property():
             form_data['year_built'] = None
         
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Update insert query to include missing fields
         insert_query = """
@@ -920,7 +920,7 @@ def create_property():
 @admin_required
 def get_property(id):
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     try:
         cursor.execute("SELECT * FROM properties WHERE id = %s", (id,))
         property_data = cursor.fetchone()
@@ -945,7 +945,7 @@ def get_property(id):
 def edit_property(id):
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         # Get form data with optional field handling
         name = request.form.get('name', '')
@@ -1076,7 +1076,7 @@ def edit_property(id):
 def delete_property_image(property_id, image_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # First get the image path
         cursor.execute("""
@@ -1122,7 +1122,7 @@ def delete_property_image(property_id, image_id):
 @admin_required
 def delete_property(id):
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("DELETE FROM properties WHERE id=%s", (id,))
     conn.commit()
     cursor.close()
@@ -1132,7 +1132,7 @@ def delete_property(id):
 # Helper function to get property images
 def fetch_property_images(property_id):  # Renamed the function here
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     try:
         cursor.execute("""
             SELECT id, image_path, created_at 
@@ -1160,7 +1160,7 @@ def fetch_property_images(property_id):  # Renamed the function here
 def get_property_images(id):
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         images = fetch_property_images(id)  # Use the renamed helper function here
         cursor.close()
         conn.close()
@@ -1174,7 +1174,7 @@ def get_property_images(id):
 @app.route('/admin/approved-properties', methods=['GET'])
 def fetch_approved_properties():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     
     try:
         query = """
@@ -1220,7 +1220,7 @@ def fetch_approved_properties():
 @app.route('/admin/rejected-properties', methods=['GET'])
 def fetch_rejected_properties():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("SELECT * FROM pending_properties WHERE status='rejected'")
     properties = cursor.fetchall()
     cursor.close()
@@ -1233,7 +1233,7 @@ def fetch_rejected_properties():
 @admin_required
 def get_rens():
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     
     try:
         cursor.execute("""
@@ -1266,7 +1266,7 @@ def get_rens():
 def verify_ren_status(ren_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # First check if user exists and is a REN
         cursor.execute("""
@@ -1318,7 +1318,7 @@ def verify_ren_status(ren_id):
 @admin_required
 def ban_user(id):
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("UPDATE users SET status='banned' WHERE id=%s", (id,))
     conn.commit()
     cursor.close()
@@ -1344,7 +1344,7 @@ def create_user():
         
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Hash password
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -1405,7 +1405,7 @@ def notify_admins_new_pending_property(property_data):
     """Send notifications to all admin users when a new property is submitted for approval"""
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get all admin users
         cursor.execute("""
@@ -1478,7 +1478,7 @@ def get_user_info():
     
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         cursor.execute("""
             SELECT 
@@ -1521,7 +1521,7 @@ def get_ren_properties(ren_id):
     """Get all properties (approved, pending, and rejected) for a REN"""
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Get approved properties
         cursor.execute("""
@@ -1590,7 +1590,7 @@ def verify_ren(ren_id):
     """Verify if a user is a REN and is active"""
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         cursor.execute("""
             SELECT id 
@@ -1621,7 +1621,7 @@ def get_favorites():
         
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Modified query to include agent information
         cursor.execute("""
@@ -1675,7 +1675,7 @@ def add_favorite():
 
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Check if the favorite already exists
         cursor.execute("""
@@ -1707,7 +1707,7 @@ def add_favorite():
 def remove_favorite(property_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         # Check if the favorite exists before attempting to delete
         cursor.execute("""
@@ -1738,7 +1738,7 @@ def remove_favorite(property_id):
 def get_detail_property(property_id):
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         # Modified query to include user (agent) information
         query = """
@@ -1808,7 +1808,7 @@ def get_detail_property(property_id):
 def get_recommended_properties():
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         # First get user preferences
         cursor.execute("""
@@ -1903,7 +1903,7 @@ def get_user_profile(user_id):
         
     try:
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Different queries based on user role
         base_query = """
@@ -1962,7 +1962,7 @@ def update_user_profile(user_id):
     try:
         data = request.json
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Update basic user information
         cursor.execute("""
@@ -2048,7 +2048,7 @@ class PropertyAIAssistant:
     async def generate_response(self, user_input, user_context=None, chat_history=None):
         try:
             conn = connect_db()
-            cursor = conn.cursor()
+            cursor = conn.cursor(cursor_factory=RealDictCursor)
             
             property_context = ""
 
@@ -2530,7 +2530,7 @@ async def compare_properties():
             return jsonify({"error": "No properties provided"}), 400
             
         conn = connect_db()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
         
         # Initialize user_preferences
         user_preferences = None
