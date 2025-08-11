@@ -36,14 +36,21 @@ const HomePage = () => {
       
       // Process the images for each property
       const processedProperties = data.map(property => {
-        // Convert comma-separated image paths to array if they exist
+        // Handle the new image format (objects with image_path)
         let images = [];
         if (property.images) {
-          // If images is a string (comma-separated), split it
-          if (typeof property.images === 'string') {
+          if (Array.isArray(property.images)) {
+            // Check if images are objects with image_path or just strings
+            if (property.images.length > 0 && typeof property.images[0] === 'object' && property.images[0].image_path) {
+              // New format: objects with image_path
+              images = property.images.map(img => img.image_path);
+            } else {
+              // Old format: array of strings
+              images = property.images;
+            }
+          } else if (typeof property.images === 'string') {
+            // Fallback: comma-separated string
             images = property.images.split(',').map(path => path.trim());
-          } else if (Array.isArray(property.images)) {
-            images = property.images;
           }
         }
 

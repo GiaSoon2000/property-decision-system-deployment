@@ -34,7 +34,7 @@ const FeaturedProperties = ({ properties = [] }) => {
                 {/* Image */}
                 <div className="tw-aspect-[4/3] tw-relative">
                   <img
-                    src={property.imageUrls?.[0]}
+                    src={property.imageUrls?.[0] || `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`}
                     alt={property.name}
                     onError={(e) => {
                       e.target.src = `${API_ENDPOINTS.STATIC_IMAGES}/default-property.jpg`;

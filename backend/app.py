@@ -255,11 +255,21 @@ def get_properties():
         for row in properties:
             property_dict = dict(zip(columns, row))
             if property_dict['image_ids'] and property_dict['image_paths']:
-                # For regular users, we only need the image paths
+                # Split the concatenated strings
+                image_ids = property_dict['image_ids'].split(',')
                 image_paths = property_dict['image_paths'].split(',')
-                property_dict['images'] = [path.strip() for path in image_paths if path.strip()]
+                
+                # Create image objects with both ID and path for consistency
+                property_dict['images'] = [
+                    {
+                        'id': int(id.strip()),
+                        'image_path': path.strip()
+                    }
+                    for id, path in zip(image_ids, image_paths)
+                    if id.strip() and path.strip()
+                ]
             else:
-                property_dict['images'] = ['default-property.jpg']
+                property_dict['images'] = [{'id': 0, 'image_path': 'default-property.jpg'}]
             
             # Clean up temporary fields
             del property_dict['image_ids']
