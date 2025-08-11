@@ -7,6 +7,7 @@ from datetime import datetime
 from enum import Enum
 import psycopg2
 import psycopg2.extras
+from psycopg2.extras import RealDictCursor
 import os
 from werkzeug.utils import secure_filename
 from config import Config
@@ -289,7 +290,7 @@ def search_properties():
     furnishing_status = request.args.get('furnishingStatus', '')
 
     conn = connect_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     try:
         # Modified query to include agent information
