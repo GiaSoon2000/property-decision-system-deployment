@@ -449,7 +449,7 @@ def search_properties():
             params.append(furnishing_status)
             
         # Add GROUP BY clause at the end
-        query += " GROUP BY p.id"
+        query += " GROUP BY p.id, u.username, u.phone"
 
         # Debug logging
         print("Executing query:", query)
