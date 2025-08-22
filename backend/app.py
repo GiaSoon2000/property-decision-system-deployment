@@ -26,8 +26,11 @@ app = Flask(__name__)
 if not Config.init_app(app):
     raise RuntimeError("Failed to initialize application configuration")
 app.secret_key = "WW15257Z!"  # Use a secret key for session management
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True in production with HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 bcrypt = Bcrypt(app)
-CORS(app, origins=['http://localhost:3000', 'https://property-frontend-mk0z.onrender.com'], supports_credentials=True, methods=['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'])  # Added DELETE and PUT methods
+CORS(app, origins=['http://localhost:3000', 'https://property-frontend-mk0z.onrender.com', 'https://property-frontend-p69z.onrender.com'], supports_credentials=True, methods=['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT'])  # Added DELETE and PUT methods
 
 
 # Update these configurations to ensure consistency
@@ -151,8 +154,10 @@ def admin_required(f):
 def require_login(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        print(f"Session contents: {session}")
+        print(f"User ID in session: {session.get('user_id')}")
         if 'user_id' not in session:
-            return jsonify({"error": "Unauthorized"}), 401
+            return jsonify({"error": "Unauthorized - No user_id in session"}), 401
         return f(*args, **kwargs)
     return decorated_function
 
@@ -264,6 +269,9 @@ def login():
             session['user_id'] = user['id']
             session['username'] = user['username']
             session['role'] = user['role']
+            
+            print(f"Session after login: {session}")
+            print(f"User ID set in session: {session.get('user_id')}")
             
             # Remove sensitive data before sending
             user.pop('password', None)

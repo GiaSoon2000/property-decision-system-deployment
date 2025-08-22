@@ -56,7 +56,7 @@ const Header = () => {
     }
 
     try {
-      const response = await fetch(`${API_ENDPOINTS.NOTIFICATIONS}/\${1}`, {
+      const response = await fetch(`${API_ENDPOINTS.NOTIFICATIONS}/${userId}`, {
         credentials: 'include'
       });
       
@@ -156,7 +156,7 @@ const Header = () => {
     if (!userId || !notificationId) return;
 
     try {
-      const response = await fetch(`${API_ENDPOINTS.MARK_NOTIFICATION_READ}/\${1}/read`, {
+      const response = await fetch(`${API_ENDPOINTS.MARK_NOTIFICATION_READ}/${notificationId}/read`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -177,7 +177,7 @@ const Header = () => {
     if (!userId) return;
 
     try {
-      const response = await fetch(`${API_ENDPOINTS.MARK_ALL_NOTIFICATIONS_READ}/\${1}/mark-all-read`, {
+      const response = await fetch(`${API_ENDPOINTS.MARK_ALL_NOTIFICATIONS_READ}/${userId}/mark-all-read`, {
         method: 'POST',
         credentials: 'include'
       });

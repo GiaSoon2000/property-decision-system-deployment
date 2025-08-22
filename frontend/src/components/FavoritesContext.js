@@ -66,7 +66,7 @@ export const FavoritesProvider = ({ children }) => {
     }
 
     try {
-      const url = `${API_ENDPOINTS.FAVORITES}\${1}`;
+      const url = addToFavorites ? API_ENDPOINTS.FAVORITES : `${API_ENDPOINTS.FAVORITES}/${propertyId}`;
       const method = addToFavorites ? 'POST' : 'DELETE';
   
       const response = await fetch(url, {
