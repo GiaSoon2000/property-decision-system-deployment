@@ -1854,7 +1854,7 @@ def get_detail_property(property_id):
             LEFT JOIN users u ON p.submitted_by = u.id
             LEFT JOIN profiles prof ON u.id = prof.user_id
             WHERE p.id = %s
-            GROUP BY p.id
+            GROUP BY p.id, u.username, u.phone, prof.REN_id
         """
         
         cursor.execute(query, (property_id,))

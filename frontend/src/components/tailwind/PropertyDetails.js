@@ -128,10 +128,19 @@ const PropertyDetails = () => {
     const fetchPropertyDetails = async () => {
       try {
         const response = await fetch(`${API_ENDPOINTS.PROPERTY_DETAIL}/${id}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-        setProperty(data);
+        if (data.error) {
+          console.error('Backend error:', data.error);
+          setProperty(null);
+        } else {
+          setProperty(data);
+        }
       } catch (error) {
         console.error('Error fetching property details:', error);
+        setProperty(null);
       } finally {
         setLoading(false);
       }
@@ -222,7 +231,7 @@ const PropertyDetails = () => {
                   {property.area}
                 </span>
                 <span className="tw-text-2xl tw-font-bold tw-text-blue-600">
-                  RM {property.price.toLocaleString()}
+                  RM {property.price ? property.price.toLocaleString() : 'N/A'}
                 </span>
               </div>
 
