@@ -1963,7 +1963,7 @@ def get_recommended_properties():
             params.append(user_preferences['price_range_max'])
 
         # Add grouping and status condition
-        query += " AND p.status = 'approved' GROUP BY p.id"
+        query += " AND p.status = 'approved' GROUP BY p.id, u.username, u.phone"
 
         cursor.execute(query, params)
         properties = cursor.fetchall()
