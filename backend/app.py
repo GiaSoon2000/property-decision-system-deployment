@@ -1743,7 +1743,7 @@ def get_favorites():
             LEFT JOIN property_images pi ON p.id = pi.property_id
             LEFT JOIN users u ON p.submitted_by = u.id
             WHERE uf.user_id = %s
-            GROUP BY p.id
+            GROUP BY p.id, u.username, u.phone
         """, (user_id,))
         
         favorites = cursor.fetchall()
