@@ -80,6 +80,66 @@ def connect_db():
 def home():
     return "Welcome to the Property Buying Decision System API"
 
+# Add this after the home route and before the admin_required decorator
+
+@app.route('/test-db', methods=['GET'])
+def test_db():
+    try:
+        conn = connect_db()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        
+        # Test basic connection
+        cursor.execute("SELECT 1 as test")
+        test_result = cursor.fetchone()
+        
+        # Check if properties table exists
+        cursor.execute("""
+            SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_schema = 'public' 
+                AND table_name = 'properties'
+            ) as table_exists
+        """)
+        table_exists = cursor.fetchone()
+        
+        # Check if property_images table exists
+        cursor.execute("""
+            SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_schema = 'public' 
+                AND table_name = 'property_images'
+            ) as table_exists
+        """)
+        images_table_exists = cursor.fetchone()
+        
+        # Get table structure if it exists
+        table_structure = None
+        if table_exists['table_exists']:
+            cursor.execute("""
+                SELECT column_name, data_type 
+                FROM information_schema.columns 
+                WHERE table_name = 'properties' 
+                ORDER BY ordinal_position
+            """)
+            table_structure = cursor.fetchall()
+        
+        cursor.close()
+        conn.close()
+        
+        return jsonify({
+            "database_connection": "success",
+            "test_query": test_result,
+            "properties_table_exists": table_exists['table_exists'],
+            "property_images_table_exists": images_table_exists['table_exists'],
+            "properties_table_structure": table_structure
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "database_connection": "failed",
+            "error": str(e)
+        }), 500
+
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -231,58 +291,89 @@ def logout():
 # API Route to get all properties
 @app.route('/properties', methods=['GET'])
 def get_properties():
-    conn = connect_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
-
     try:
+        conn = connect_db()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+        # First check if properties table exists
+        cursor.execute("""
+            SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_schema = 'public' 
+                AND table_name = 'properties'
+            ) as table_exists
+        """)
+        table_exists = cursor.fetchone()
+        
+        if not table_exists['table_exists']:
+            return jsonify({"error": "Properties table does not exist", "properties": []}), 200
+
+        # Check if property_images table exists
+        cursor.execute("""
+            SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_schema = 'public' 
+                AND table_name = 'property_images'
+            ) as table_exists
+        """)
+        images_table_exists = cursor.fetchone()
+        
+        # Use a simpler approach - get properties first, then get images separately
         query = """
-            SELECT p.*, 
-                   STRING_AGG(DISTINCT pi.id::text, ',') as image_ids,
-                   STRING_AGG(DISTINCT pi.image_path, ',') as image_paths,
-                   COUNT(DISTINCT pi.id) as image_count
+            SELECT p.*
             FROM properties p
-            LEFT JOIN property_images pi ON p.id = pi.property_id
-            GROUP BY p.id
+            WHERE p.status = 'approved'
+            ORDER BY p.created_at DESC
         """
         
         cursor.execute(query)
         properties = cursor.fetchall()
         
-        # 將結果轉換為字典格式
+        # Convert results to dictionary format
         columns = [desc[0] for desc in cursor.description]
         properties_dict = []
         
         for row in properties:
             property_dict = dict(zip(columns, row))
-            if property_dict['image_ids'] and property_dict['image_paths']:
-                # Split the concatenated strings
-                image_ids = property_dict['image_ids'].split(',')
-                image_paths = property_dict['image_paths'].split(',')
-                
-                # Create image objects with both ID and path for consistency
-                property_dict['images'] = [
-                    {
-                        'id': int(id.strip()),
-                        'image_path': path.strip()
-                    }
-                    for id, path in zip(image_ids, image_paths)
-                    if id.strip() and path.strip()
-                ]
+            
+            # Get images for this property if property_images table exists
+            if images_table_exists['table_exists']:
+                try:
+                    cursor.execute("""
+                        SELECT id, image_path 
+                        FROM property_images 
+                        WHERE property_id = %s
+                        ORDER BY created_at DESC
+                    """, (property_dict['id'],))
+                    images = cursor.fetchall()
+                    
+                    if images:
+                        property_dict['images'] = [
+                            {
+                                'id': img['id'],
+                                'image_path': img['image_path']
+                            }
+                            for img in images
+                        ]
+                    else:
+                        property_dict['images'] = [{'id': 0, 'image_path': 'default-property.jpg'}]
+                except Exception as e:
+                    print(f"Error fetching images for property {property_dict['id']}: {e}")
+                    property_dict['images'] = [{'id': 0, 'image_path': 'default-property.jpg'}]
             else:
                 property_dict['images'] = [{'id': 0, 'image_path': 'default-property.jpg'}]
-            
-            # Clean up temporary fields
-            del property_dict['image_ids']
-            del property_dict['image_paths']
+                
             properties_dict.append(property_dict)
         
         return jsonify(properties_dict)
     except Exception as e:
         print("Error fetching properties:", str(e))
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e), "properties": []}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
         
 @app.route('/search', methods=['GET'])

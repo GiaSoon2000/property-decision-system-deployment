@@ -12,6 +12,8 @@ const HomePage = () => {
   const [price, setPrice] = useState('');
   const [properties, setProperties] = useState([]);
   const [areaOptions, setAreaOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,9 +32,28 @@ const HomePage = () => {
   };
 
   const fetchProperties = async () => {
+    setLoading(true);
+    setError(null);
+    
     try {
       const response = await fetch(API_ENDPOINTS.PROPERTIES);
       const data = await response.json();
+      
+      // Check if the response contains an error
+      if (data.error) {
+        console.error('Backend error:', data.error);
+        setError(`Backend error: ${data.error}`);
+        setProperties([]);
+        return;
+      }
+      
+      // Ensure data is an array
+      if (!Array.isArray(data)) {
+        console.error('Invalid data format:', data);
+        setError('Invalid data format received from server');
+        setProperties([]);
+        return;
+      }
       
       // Process the images for each property
       const processedProperties = data.map(property => {
@@ -73,6 +94,10 @@ const HomePage = () => {
       setProperties(processedProperties);
     } catch (error) {
       console.error('Error fetching properties:', error);
+      setError('Failed to load properties. Please try again later.');
+      setProperties([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -161,7 +186,20 @@ const HomePage = () => {
 
         <RecommendedProperties />
         
-        <FeaturedProperties properties={properties} />
+        {loading && (
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <p>Loading properties...</p>
+          </div>
+        )}
+        
+        {error && (
+          <div style={{ textAlign: 'center', padding: '2rem', color: 'red' }}>
+            <p>Error: {error}</p>
+            <p>Please try refreshing the page or contact support if the issue persists.</p>
+          </div>
+        )}
+        
+        {!loading && !error && <FeaturedProperties properties={properties} />}
       </main>
     </div>
   );
