@@ -330,11 +330,10 @@ def get_properties():
         properties = cursor.fetchall()
         
         # Convert results to dictionary format
-        columns = [desc[0] for desc in cursor.description]
         properties_dict = []
         
         for row in properties:
-            property_dict = dict(zip(columns, row))
+            property_dict = dict(row)  # RealDictCursor already returns dict, just make a copy
             
             # Get images for this property if property_images table exists
             if images_table_exists['table_exists']:
