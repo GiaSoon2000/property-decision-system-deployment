@@ -85,7 +85,7 @@ const FavoritePages = () => {
             >
               <div className="tw-relative tw-h-48">
                 <img
-                  src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                  src={`${API_ENDPOINTS.STATIC_IMAGES}/${getFirstImage(property)}`}
                   alt={property.name}
                   className="tw-w-full tw-h-full tw-object-cover tw-rounded-t-lg"
                   onError={(e) => {

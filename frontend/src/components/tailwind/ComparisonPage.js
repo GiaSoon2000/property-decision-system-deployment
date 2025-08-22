@@ -231,7 +231,7 @@ const ComparisonPage = () => {
                     >
                       <div className="tw-flex tw-items-center">
                         <img
-                          src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                          src={`${API_ENDPOINTS.STATIC_IMAGES}/${property.images[0]}`}
                           alt={property.name}
                           className="tw-w-16 tw-h-16 tw-object-cover tw-rounded-md tw-mr-3"
                           onError={(e) => {
@@ -269,7 +269,7 @@ const ComparisonPage = () => {
                             &times;
                           </button>
                           <img
-                            src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                            src={`${API_ENDPOINTS.STATIC_IMAGES}/${property.images[0]}`}
                             alt={property.name}
                             className="tw-w-full tw-h-32 tw-object-cover tw-rounded-md tw-mb-2"
                             onError={(e) => {

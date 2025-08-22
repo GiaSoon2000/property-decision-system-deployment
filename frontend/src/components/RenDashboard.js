@@ -44,7 +44,7 @@ const RenDashboard = () => {
     const fetchRenProperties = async (renId) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`${API_ENDPOINTS.REN_PROPERTIES}/\${1}`, {
+            const response = await fetch(`${API_ENDPOINTS.REN_PROPERTIES}/${renId}`, {
                 credentials: 'include'
             });
             

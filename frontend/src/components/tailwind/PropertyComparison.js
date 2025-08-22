@@ -47,7 +47,7 @@ const PropertyComparison = ({
                 &times;
               </button>
               <img
-                src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                src={`${API_ENDPOINTS.STATIC_IMAGES}/${property.images[0]}`}
                 alt={property.name}
                 className="tw-w-full tw-h-32 tw-object-cover tw-rounded-md tw-mb-2"
                 onError={(e) => {

@@ -111,7 +111,7 @@ const PropertyManagement = () => {
             
             console.log('Fetching property details for ID:', propertyId);
             
-            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_EDIT}/\${1}/edit`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_EDIT}/${propertyId}/edit`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -153,7 +153,7 @@ const PropertyManagement = () => {
             setShowForm(true);
 
             // Fetch property images
-            const imagesResponse = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_IMAGES}/\${1}/images`, {
+            const imagesResponse = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_IMAGES}/${propertyId}/images`, {
                 credentials: 'include',
             });
         
@@ -173,7 +173,7 @@ const PropertyManagement = () => {
     const handleDelete = async (propertyId) => {
       if (window.confirm('Are you sure you want to delete this property?')) {
         try {
-          const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_DELETE}/\${1}/delete`, {
+          const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_DELETE}/${propertyId}/delete`, {
             method: 'DELETE',
             credentials: 'include'
           });
@@ -197,7 +197,7 @@ const PropertyManagement = () => {
 
         try {
             const response = await fetch(
-                `${API_ENDPOINTS.ADMIN_PROPERTY_IMAGES}/\${1}/image/\${2}/delete`,
+                `${API_ENDPOINTS.ADMIN_PROPERTY_IMAGES}/${editingId}/image/${imageId}/delete`,
                 {
                     method: 'DELETE',
                     credentials: 'include',
@@ -234,7 +234,7 @@ const PropertyManagement = () => {
         
         // Define the URL based on whether we're editing or creating
         const url = isEditing 
-            ? `${API_ENDPOINTS.ADMIN_PROPERTY_EDIT}/\${1}/edit`
+            ? `${API_ENDPOINTS.ADMIN_PROPERTY_EDIT}/${editingId}/edit`
             : API_ENDPOINTS.ADMIN_CREATE_PROPERTY;
         
         const formDataObj = new FormData();
@@ -525,7 +525,7 @@ const PropertyManagement = () => {
                         {formData.existingImages.map((img) => (
                             <div key={img.id} className="tw-relative tw-group">
                                 <img 
-                                    src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                                    src={`${API_ENDPOINTS.STATIC_IMAGES}/${img.image_path}`}
                                     alt="Property" 
                                     className="tw-w-full tw-h-32 tw-object-cover tw-rounded-md"
                                     onError={(e) => {
@@ -588,7 +588,7 @@ const PropertyManagement = () => {
                 {property.images && property.images.length > 0 ? (
                 <img
                     className="tw-w-full tw-h-full tw-object-cover"
-                    src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                    src={`${API_ENDPOINTS.STATIC_IMAGES}/${property.images[0]}`}
                     alt={property.name}
                     onError={(e) => {
                         e.target.onerror = null;

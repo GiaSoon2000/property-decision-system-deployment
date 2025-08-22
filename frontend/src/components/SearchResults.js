@@ -425,7 +425,7 @@ const SearchResults = () => {
                     <div className="property-image-container">
                       {property.images && property.images.length > 0 ? (
                         <img
-                          src={`${API_ENDPOINTS.STATIC_IMAGES}/\${1}`}
+                          src={`${API_ENDPOINTS.STATIC_IMAGES}/${property.images[0]}`}
                           alt={property.name}
                           className="property-image"
                           onError={(e) => {
