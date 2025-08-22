@@ -105,7 +105,7 @@ const AdminDashboard = () => {
         try {
             console.log(`Starting approval process for property ID: ${id}`);
             
-            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_APPROVE}/\${1}/approve`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_APPROVE}/${id}/approve`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -149,7 +149,7 @@ const AdminDashboard = () => {
         if (!reason) return; // If no reason is provided, cancel the operation
         
         try {
-            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_REJECT}/\${1}/reject`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_PROPERTY_REJECT}/${id}/reject`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ const AdminDashboard = () => {
 
     const handleBanUser = async (userId) => {
         try {
-            const response = await fetch(`${API_ENDPOINTS.ADMIN_BAN_USER}/\${1}/ban`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_BAN_USER}/${userId}/ban`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -236,7 +236,7 @@ const AdminDashboard = () => {
 
     const handleVerifyRen = async (renId) => {
         try {
-            const response = await fetch(`${API_ENDPOINTS.ADMIN_VERIFY_REN}/\${1}/verify`, {
+            const response = await fetch(`${API_ENDPOINTS.ADMIN_VERIFY_REN}/${renId}/verify`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
